@@ -3,11 +3,11 @@ import FullCalendar from '@fullcalendar/vue3'
 import {
   blankEvent,
   useCalendar,
-} from '@/views/apps/calendar/useCalendar'
-import { useCalendarStore } from '@/views/apps/calendar/useCalendarStore'
+} from '@/views/calendar/useCalendar'
+import { useCalendarStore } from '@/views/calendar/useCalendarStore'
 
 // Components
-import CalendarEventHandler from '@/views/apps/calendar/CalendarEventHandler.vue'
+import CalendarEventHandler from '@/views/calendar/CalendarEventHandler.vue'
 
 // 👉 Store
 const store = useCalendarStore()
@@ -98,7 +98,6 @@ Else if => all filters are selected (by checking length of both array) => Empty 
                 :key="calendar.label"
                 v-model="store.selectedCalendars"
                 :value="calendar.label"
-                :color="calendar.color"
                 :label="calendar.label"
               />
             </div>
