@@ -32,11 +32,13 @@ const configStore = useLayoutConfigStore()
         </div>
       </div>
       <!-- 👉 Navigation -->
-      <div class="layout-horizontal-nav">
+      <!--
+        <div class="layout-horizontal-nav">
         <div class="horizontal-nav-content-container">
-          <HorizontalNav :nav-items="navItems" />
+        <HorizontalNav :nav-items="navItems" />
         </div>
-      </div>
+        </div>
+      -->
     </div>
 
     <main class="layout-page-content">
