@@ -1,16 +1,21 @@
 export const useCalendarStore = defineStore('calendar', {
-  // arrow function recommended for full type inference
   state: () => ({
     availableCalendars: [
       {
+        label: 'IB 109',
+      },
+      {
         label: 'KA 101',
-        equipments: [],
       },
       {
         label: 'KA 102 Open Lab',
       },
       {
         label: 'KA 102 Weighing Room',
+        equipments: [
+          'Analytical Balance',
+          'Digital top loading balance',
+        ],
       },
       {
         label: 'KA 102 Rotary Evaporator',
@@ -20,12 +25,23 @@ export const useCalendarStore = defineStore('calendar', {
       },
       {
         label: 'KA 201 Open Lab',
+        equipments: [
+          'Incubators',
+          'Refrigerator', 
+          'Orbital shaker', 
+          'Microwave oven',
+          'Digital top loading balance',
+        ],
       },
       {
         label: 'KA 201 Autoclave',
       },
       {
         label: 'KA 201 Sterile Room',
+        equipments: [
+          'BSC',
+          'Laminar Flow Hood',
+        ],
       },
       {
         label: 'KA 202 Open Lab',
@@ -35,15 +51,48 @@ export const useCalendarStore = defineStore('calendar', {
       },
       {
         label: 'KA 203 Open Lab',
+        equipments: [
+          'Refrigerated centrifuge',
+          'Microplate reader',
+          'Incubator',
+          'Refrigerator',
+          'Homogenizer',
+          'Thermal cycler',
+          'UV trans-illuminator',
+          'Analytical balance',
+          'Digital top loading balance',
+          'Microwave oven',
+        ],
       },
       {
         label: 'KA 203 Sterile Room',
+        equipments: [
+          'BSC',
+          'Agarose gel electrophoresis set-up',
+          'Vortex mixer',
+        ],
       },
       {
         label: 'Research Lab Open Lab',
+        equipments: [
+          'Refrigerator',
+          'Refrigerated Centrifuge',
+          'Thermal Cycler',
+          'qPCR',
+          'Gel-electrophoresis set up',
+          'Gel-documentation System',
+        ],
       },
       {
         label: 'Research Lab Chrom Room',
+        equipments: [
+          'Autoclave',
+          'Laminar Flow Hood',
+          'Microplate Reader',
+          'Ultrasonic Bath Sonicator',
+          'Analytical Balance',
+          'Top Loading Balance',
+        ],
       },
       {
         label: 'Research Lab V10',

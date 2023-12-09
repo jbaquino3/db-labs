@@ -2,12 +2,6 @@
 import { PerfectScrollbar } from 'vue3-perfect-scrollbar'
 import { VForm } from 'vuetify/components/VForm'
 import { useCalendarStore } from './useCalendarStore'
-import avatar1 from '@images/avatars/avatar-1.png'
-import avatar2 from '@images/avatars/avatar-2.png'
-import avatar3 from '@images/avatars/avatar-3.png'
-import avatar5 from '@images/avatars/avatar-5.png'
-import avatar6 from '@images/avatars/avatar-6.png'
-import avatar7 from '@images/avatars/avatar-7.png'
 
 // 👉 store
 const props = defineProps({
@@ -28,6 +22,7 @@ const emit = defineEmits([
   'removeEvent',
 ])
 
+const userData = useCookie('userData')
 const store = useCalendarStore()
 const refForm = ref()
 
@@ -66,33 +61,6 @@ const handleSubmit = () => {
     }
   })
 }
-
-const guestsOptions = [
-  {
-    avatar: avatar1,
-    name: 'Jane Foster',
-  },
-  {
-    avatar: avatar3,
-    name: 'Donna Frank',
-  },
-  {
-    avatar: avatar5,
-    name: 'Gabrielle Robertson',
-  },
-  {
-    avatar: avatar7,
-    name: 'Lori Spears',
-  },
-  {
-    avatar: avatar6,
-    name: 'Sandy Vega',
-  },
-  {
-    avatar: avatar2,
-    name: 'Cheryl May',
-  },
-]
 
 // 👉 Form
 const onCancel = () => {
@@ -150,6 +118,16 @@ const title = computed(() => {
 
   return arr.join(' - ') || 'Schedule Information'
 })
+
+const equipments = computed(() => {
+  const selectedCalendar = store.availableCalendars.find(x => x.label === event.value.extendedProps.calendar)
+
+  if(selectedCalendar) {
+    return selectedCalendar.equipments || []
+  }
+
+  return []
+})
 </script>
 
 <template>
@@ -173,6 +151,7 @@ const title = computed(() => {
         >
           <VIcon
             size="18"
+            color="error"
             icon="tabler-trash"
           />
         </IconBtn>
@@ -192,7 +171,7 @@ const title = computed(() => {
               <VCol cols="12">
                 <AppSelect
                   v-model="event.extendedProps.calendar"
-                  label="Room"
+                  label="Room/Equipment"
                   :rules="[requiredValidator]"
                   :items="store.availableCalendars"
                   :item-title="item => item.label"
@@ -216,14 +195,25 @@ const title = computed(() => {
                 </AppSelect>
               </VCol>
 
+              <!-- 👉 Calendar -->
+              <VCol cols="12">
+                <VCheckbox
+                  v-for="equipment in equipments"
+                  :key="equipment"
+                  v-model="event.extendedProps.equipments"
+                  :value="equipment"
+                  :label="equipment"
+                />
+              </VCol>
+
               <!-- 👉 Start date -->
               <VCol cols="12">
                 <AppDateTimePicker
                   :key="JSON.stringify(startDateTimePickerConfig)"
                   v-model="event.start"
                   :rules="[requiredValidator]"
-                  label="Start date"
-                  placeholder="Select Date"
+                  :label="event.allDay ? 'Start Date' : 'Start Date/Time'"
+                  :placeholder="event.allDay ? 'Select Start Date' : 'Select Start Date/Time'"
                   :config="startDateTimePickerConfig"
                 />
               </VCol>
@@ -234,30 +224,23 @@ const title = computed(() => {
                   :key="JSON.stringify(endDateTimePickerConfig)"
                   v-model="event.end"
                   :rules="[requiredValidator]"
-                  label="End date"
-                  placeholder="Select End Date"
+                  :label="event.allDay ? 'End Date' : 'End Date/Time'"
+                  :placeholder="event.allDay ? 'Select End Date' : 'Select End Date/Time'"
                   :config="endDateTimePickerConfig"
-                />
-              </VCol>
-
-              <!-- 👉 All day -->
-              <VCol cols="12">
-                <VSwitch
-                  v-model="event.allDay"
-                  label="All day"
                 />
               </VCol>
 
               <!-- 👉 Students -->
               <VCol cols="12">
                 <AppSelect
+                  v-if="userData.members"
                   v-model="event.extendedProps.guests"
                   label="Students"
                   placeholder="Select Students"
                   :rules="[requiredValidator]"
-                  :items="guestsOptions"
-                  :item-title="item => item.name"
-                  :item-value="item => item.name"
+                  :items="userData.members"
+                  :item-title="item => item"
+                  :item-value="item => item"
                   chips
                   multiple
                   eager

@@ -19,6 +19,7 @@ export const blankEvent = {
     calendar: undefined,
     guests: [],
     status: 'pending',
+    equipments: [],
   },
 }
 export const useCalendar = (event, isEventHandlerSidebarActive, isLeftSidebarOpen) => {
@@ -41,7 +42,7 @@ export const useCalendar = (event, isEventHandlerSidebarActive, isLeftSidebarOpe
 
   // ℹ️ Extract event data from event API
   const extractEventDataFromEventApi = eventApi => {
-    const { id, title, start, end, url, extendedProps: { calendar, guests, status }, allDay } = eventApi
+    const { id, title, start, end, url, extendedProps: { calendar, guests, status, equipments }, allDay } = eventApi
     
     return {
       id,
@@ -53,6 +54,7 @@ export const useCalendar = (event, isEventHandlerSidebarActive, isLeftSidebarOpe
         calendar,
         guests,
         status,
+        equipments,
       },
       allDay,
     }
